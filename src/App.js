@@ -1,11 +1,21 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import './styles/mainstyles.css';
 import './styles/queries.css'
 
+import Gate from './pages/Gate';
+
 function App() {
+
   return (
-    <div className="App">
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path={"/"} exact component={Gate} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
