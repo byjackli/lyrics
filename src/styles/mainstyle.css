@@ -17,7 +17,7 @@
 :root {
   /* color */
   --BrandL: #D35313;     /* Apple Red byjackli   - Brand identity color suitable for background, header text, and error messages. */
-  --BrandS: #B5263780;   /* Apple Red byjackli   - Suitable for in-text link decoration and inactive inpit fields. */
+  --BrandS: #D3531373;   /* Apple Red byjackli   - Suitable for in-text link decoration and inactive inpit fields. */
   
   --DarkL: #000000;    /* Skid Black byjackli  - Suitable for any text and backgrounds. This is the default 'dark-mode'. */
   --DarkM: #000000A6;  /* Dark Black byjackli  - Suitable for overalys, tagged texts, drop shadows, help messages, and error messages. */
@@ -28,11 +28,11 @@
   --LightS: #FFFFFFBF; /* Clean White byjackli - Suitable for overlays */
 
   /* height */
-  --navheight: 107px;
+  --navheight: 20px;
 
   /* duration */
-  --in: .1s;
-  --out: .3s;
+  --in: .25s;
+  --out: .5s;
 }
 
 
@@ -187,8 +187,8 @@ input[type="submit"] {
   width: fit-content;
   border: 3px solid var(--BrandL);
   padding: 7px 9px;
-  background-image: linear-gradient( to top, var(--BrandL) 50%, var(--LightL) 50%);
-  background-size: 100% 200%;
+  background-image: linear-gradient( to top, var(--BrandL) 25%, var(--LightL) 25% 50%, var(--BrandL) 50% 75%, var(--LightL) 75%);
+  background-size: 100% 400%;
   background-repeat: repeat-x;
   background-position: 100% 100%;
 
@@ -217,7 +217,7 @@ input[type="submit"] {
 nav .active {
   outline: none;
   color: var(--BrandL);
-  background-position: 100% -0%;
+  background-position: 100% 0%;
   transition: all var(--in);
 }
 /* Active (on-click) animation */
@@ -240,7 +240,7 @@ nav .active {
 .button-box-nofill, 
 .button-pill-nofill,
 .button-round-nofill {
-  background-image: linear-gradient( to top, var(--LightL) 50%, var(--BrandL) 50%);
+  background-image: linear-gradient( to top, var(--LightL) 25%, var(--BrandL) 25% 50%, var(--LightL) 50% 75%, var(--BrandL) 75%);
   border-color: var(--LightL);
   color: var(--BrandL);
 }
@@ -256,20 +256,32 @@ a:link, a:visited {
   transition: all var(--out);
   z-index: 1;
 }
-.intext { 
+.intext, .flattext-reg, .flattext-invert { 
   background-image: linear-gradient( to right, var(--BrandS) 50%, var(--BrandL) 50%);
   background-size: 200% 8px;
   background-repeat: repeat-x;
   background-position: 200% 100%;
   transition: all var(--out);
 }
-.intext:hover, .intext:hover *, .intext:focus, .intext:focus * {
+.flattext-reg, .flattext-invert {
+  background-image: linear-gradient( to right, var(--BrandS) 50%, var(--BrandL) 50%);
+  background-size: 200% 0px;
+  color: var(--BrandL);
+}
+.flattext-reg {
+  color: var(--LightL);
+}
+.intext:hover, .intext:focus, 
+.intext:hover *, .intext:focus *, 
+.flattext-reg:hover, .flattext-reg:focus, 
+.flattext-invert:hover, .flattext-invert:focus {
   outline: none;
   color: var(--LightL);
   background-size: 200% 100%;
   background-position: 100% 100%;
   transition: all var(--in);
 }
+.intext:active { color: var(--DarkS); }
 .intext .fas { width: fit-content; display: inline; }
 .intext:link:hover::after, .intext:link:focus::after {
   height: 1.5em;
@@ -653,11 +665,19 @@ main.project .gallery .card {
 
 /* ========= 98 STYLEGUIDE ========= */
 main.styleguide { background-color: #DFDFDF !important; }
-main.styleguide section { margin: 50px !important; }
+main.styleguide section { margin-bottom: 150px !important; }
 main.styleguide section>* { margin: 50px !important; }
+
+/* Typography */
 main.styleguide section.typography>div>div:last-of-type { margin-left: 100px; }
 main.styleguide section.typography>div>div:last-of-type * { font-family: "Roboto-Slab"; }
-main.styleguide section.typography>div>div>div { margin: 30px 0; }
+main.styleguide section.typography>div>div>div { margin-right: 30px; }
+
+/* Clicks */
+main.styleguide section.clicks>div a {
+  margin: 0 30px;
+}
+
 main.styleguide section>h2:first-of-type,
 main.styleguide nav,
 main.styleguide .compact-navbar,

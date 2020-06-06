@@ -9,8 +9,20 @@ export function Button({ label, shape, color, ...rest }) {
 
 
 // Link -- In-Text, Highlighted
-export function Intext({href, label, ...rest}) {
+export function Intext({ href, label, flat, invert, ...rest }) {
     if (!href) { return null; }
+    if (flat) {
+        let type = "reg";
+
+        if (invert) {
+            type = "invert";
+        }
+        return (
+            <Link className={`flattext-${type}`} to={href} {...rest}>
+                {label}
+            </Link>
+        )
+    }
     if (href.startsWith("/") || href.startsWith(".") || href.startsWith("#")) {
         return (
             <Link className="intext" to={href} {...rest}>

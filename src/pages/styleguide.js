@@ -88,12 +88,22 @@ class Styleguide extends Component {
                 <section>
                     <h2>Color Palette</h2>
                 </section>
-                <section className="buttons-and-links">
+                <section className="clicks">
                     <h2>Buttons and Links</h2>
-                    <Button shape="pill" color="fill" label="pill fill" />
-                    <Button shape="pill" color="nofill" label="pill nofill" />
-                    <Button shape="round" color="fill" label="round fill" />
-                    <Button shape="round" color="nofill" label="round nofill" />
+                    <div>
+                        <Button shape="pill" color="fill" label="pill fill" />
+                        <Button shape="pill" color="nofill" label="pill nofill" />
+                        <Button shape="round" color="fill" label="round fill" />
+                        <Button shape="round" color="nofill" label="round nofill" />
+                        <Button shape="box" color="fill" label="round fill" />
+                        <Button shape="box" color="nofill" label="round nofill" />
+                    </div>
+                    <div>
+                        <Intext href="/styleguide" label="internal" />
+                        <Intext href="https://www.instagram.com/byjackli" label="external" />
+                        <Intext flat={true} href="/styleguide" label="flat regular" />
+                        <Intext flat={true} invert={true} href="https://www.instagram.com/byjackli" label="flat invert" />
+                    </div>
                 </section>
                 <section className="cards-and-slots">
                     <h2>Cards and Slots</h2>
