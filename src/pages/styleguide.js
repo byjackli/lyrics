@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { Navbar, CompactNavbar, Menubar, Footer } from '../components/Navigation';
 // import { Searchbar, Suggestbox } from '../components/Search';
-// import { Card, Slot } from '../components/Nodes';
+import { Queue } from '../components/Nodes';
 import { Button, Intext } from '../components/Clicks';
 
 
@@ -106,7 +106,12 @@ class Styleguide extends Component {
                     </div>
                 </section>
                 <section className="cards-and-slots">
-                    <h2>Cards and Slots</h2>
+                    <h2>Queue Components</h2>
+                    <div>
+                        <Queue id="001" song="IIIIIIIIIIII" artist="WWWWWWWWWWWWWWWWWWW" image="https://i.scdn.co/image/ab67616d00001e0220e08c8cc23f404d723b5647" alt="Next Album Cover" />
+                        <Queue id="002" song="ROCKSTAR (feat. Roddy Ricch)" artist="DaBaby, Roddy Ricch" image="https://i.scdn.co/image/ab67616d00001e0220e08c8cc23f404d723b5647" alt="Next Album Cover" />
+                        <Queue add={true} />
+                    </div>
                 </section>
             </main>
         )

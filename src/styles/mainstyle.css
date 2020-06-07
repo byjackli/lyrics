@@ -59,8 +59,7 @@ html, body, #root, .App, .App>div {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 main {
@@ -139,21 +138,22 @@ strong { font-weight: 600; }
 
 
 /* positioning */
-.center, .vrtTL, .vrtTC, .hrzTL, .hrzTC, .hrzBT, .hrzEV {
+.vrtCC, .vrtTL, .vrtTC, .vrtBT, .vrtEV, .vrtCL, .hrzCC, .hrzTL, .hrzTC, .hrzBT, .hrzEV {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 }
-.center {
+.vrtCC, .hrzCC {
   justify-content: center;
   align-items: center;
 }
+
 .vrtTC { align-items: center;}
-.hrzTL, .hrzTC, .hrzBT, .hrzEV { flex-direction: row; }
-.hrzTC { justify-content: center; }
-.hrzBT { justify-content: space-between; }
-.hrzEV { justify-content: space-evenly;}
+.hrzCC, .hrzTL, .hrzTC, .hrzBT, .hrzEV { flex-direction: row; }
+.vrtCL, .hrzTC { justify-content: center; }
+.hrzBT, .vrtBT { justify-content: space-between; }
+.hrzEV, .vrtEV { justify-content: space-evenly;}
 
 /* scrollbar */
 *::-webkit-scrollbar {
@@ -335,96 +335,149 @@ ol {
 }
 
 
-/* --- 03d Cards and Slots --- */
-/* Card */
-.card {
-  width: 100%;
-  height: fit-content;
+/* --- 03d Queue Components --- */
+/* Queue Card */
+.queue-card-container {
+  width: 17em;
+  height: 5em;
+  margin-bottom: 10px;
+}
+.queue-card, .queue-add {
+  width: 17em;
+  height: 5em;
   background-color: var(--LightM);
-  padding: 30px;
-  border-radius: 25px;
+  border-radius: 10px;
   box-shadow: 0px 2px 2px var(--DarkS);
-}
-.card>div {
-  width: 100%;
-  height: 100%;
-  padding-top: 25px;
-}
-.card ol { padding-right: 50px; }
-.card ol li { display: flex; }
-.card ol:last-of-type { padding-right: 0; }
-.card .hrzTL { flex-wrap: wrap; }
-.card-vrt {
-  height: 500px;
-  margin-top: 25px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-.card-hrz {
-  width: 100%;
-  margin-top: 25px;
-  overflow-y: hidden;
-  overflow-x: scroll;
-}
-/* Slot */
-.slot {
-  width: 100%;
-  height: fit-content;
-  padding: 20px;
-  padding-top: 0;
-  margin: 15px 0;
   overflow: hidden;
+  cursor: pointer;
   transition: all var(--out);
 }
-.slot:hover {
+.queue-card *, .queue-add * {
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+.queue-card img {
+  width: 5em;
+}
+.queue-card>div:nth-child(2) {
+  width: 5em;
+}
+.queue-card>div:last-child {
+  height: 100%;
+  width: 12em;
+  padding: .5em;
+}
+.queue-card-container:hover .queue-card {
+  box-shadow: 0px 3px 7px var(--DarkS);
   transform: scale(1.05);
   transition: all var(--in);
 }
-.slot>a {
+/* Queue Settings */
+.queue-settings {
+  height: 0;
+  width: 3em;
+  top: 2em;
+  right: 3.5em;
+  overflow: hidden;
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
-
-  line-height: 0;
-  font-size: 0;
+  z-index: 0;
+  transition: all var(--out);
 }
-.slot:first-of-type { margin-top: 0px; }
-.slot:last-of-type { margin-bottom: 0px; }
-.slot-time {
-  min-width: 120px;
+.queue-settings i {
+  width: 2em;
+  height: 2em;
+  padding: .25em;
+  margin: .15em;
+  border-radius: 50%;
+  background-color: var(--LightL);
+  color: var(--BrandL);
+  cursor: pointer;
+  transition: all var(--out);
+}
+.queue-settings i:hover {
   background-color: var(--BrandL);
-  padding: 15px;
-}
-.slot-time>* {
   color: var(--LightL);
+  transform: scale(1.05);
+  transition: all var(--in);
 }
-.slot .hrzTL { flex-wrap: nowrap; }
-.slot h4 {
-  padding: 15px 35px;
+.queue-settings i:active {
+  transform: scale(.9);
+  transition: all var(--in);
 }
-.slot .hrzTL {
-  width: fit-content;
-  min-height: 25px;
-  height: fit-content; 
-  z-index: 1;
+.queue-card:hover:active {
+  transform: scale(1);
+  box-shadow: 0px 2px 2px var(--DarkS);
+  transition: all var(--in);
 }
-.slot .hrzTL:first-of-type { margin-bottom: 10px;}
-.slot .tagList { z-index: 3; flex-wrap: wrap; }
-.slot .slot-bg {
-  width: 100%;
+.queue-card-container:hover .queue-settings {
   height: 100%;
-  
-  position: absolute;
   top: 0;
-  left: 0;
-  
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  right: -3.5em;
+  transition: all var(--in);
 }
+/* Scroll Animation */ 
+.queue-card div.scroller {
+  width: 11em;
+  overflow: hidden;
+}
+div.scroller-fg {
+  height: 100%;
+  width: 50px;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  background-image: linear-gradient(to left, var(--LightL), transparent);
+  transition: all var(--in);
+}
+.queue-card-container:hover .an-scroll div.scroller-fg,
+.an-scroll:hover div.scroller-fg {
+  display: none;
+  transition: all var(--in);
+}
+.scroller p { 
+  width: fit-content;
+  white-space: nowrap; 
+}
+.queue-card-container:hover .an-scroll p, .an-scroll p:hover {
+  animation: myScroller 10s;
+  animation-iteration-count: infinite;
+}
+@keyframes myScroller {
+  from {
+    transform: translateX();
+  }
+  to {
+    transform: translateX(-50.25%);
+  }
+}
+/* Queue Add */
+.queue-add { 
+  cursor: pointer;
+  color: var(--BrandL);
+  background-color: var(--DarkM);
+  margin-bottom: 0; 
+  transition: all var(--out);
+}
+.queue-add:hover { background-color: var(--LightS); }
+.queue-add:hover * {
+  border-color: var(--BrandL);
+  color: var(--BrandL);
+  transform: scale(1.01);
+  transition: all var(--in);
+}
+.queue-add:active * {
+  transform: scale(.99);
+  transition: all var(--in);
+}
+.queue-add>div { 
+  width: 16em;
+  height: 4em;
+  border-radius: 10px;
+  border: 2px dashed var(--LightS);
+}
+.queue-add * { color: var(--LightM); }
 /* Tag */
 a.tag {
   padding: 5px 10px;
