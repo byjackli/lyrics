@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { Navbar, CompactNavbar, Menubar, Footer } from '../components/Navigation';
 // import { Searchbar, Suggestbox } from '../components/Search';
-import { Queue } from '../components/Nodes';
+import { Queue, Search } from '../components/Nodes';
 import { Button, Intext } from '../components/Clicks';
 
 
@@ -111,6 +111,9 @@ class Styleguide extends Component {
                         <Queue id="001" song="IIIIIIIIIIII" artist="WWWWWWWWWWWWWWWWWWW" image="https://i.scdn.co/image/ab67616d00001e0220e08c8cc23f404d723b5647" alt="Next Album Cover" />
                         <Queue id="002" song="ROCKSTAR (feat. Roddy Ricch)" artist="DaBaby, Roddy Ricch" image="https://i.scdn.co/image/ab67616d00001e0220e08c8cc23f404d723b5647" alt="Next Album Cover" />
                         <Queue add={true} />
+                    </div>
+                    <div>
+                        <Search placeholder="Search a song"/>
                     </div>
                 </section>
             </main>

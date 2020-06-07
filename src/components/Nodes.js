@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-// Card element, use when neccessary
+// Queue element, use when neccessary
 export class Queue extends Component {
 
     constructor(props) {
@@ -67,6 +67,23 @@ export class Queue extends Component {
                         }
                     </div>
                 </div >
+            </div>
+        )
+    }
+}
+
+export class Search extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+    }
+
+    render() {
+        return(
+            <div className="search">
+                <input type="search" {...this.props} />
             </div>
         )
     }

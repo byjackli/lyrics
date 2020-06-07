@@ -66,8 +66,13 @@ main {
   width: 100%;
   min-height: 100%;
   height: fit-content;
-  padding: 50px 75px;
+  padding: 50px 0;
   padding-top: calc(50px + var(--navheight));
+}
+section {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 .pagecover {
   width: 100%;
@@ -304,12 +309,12 @@ a:link, a:visited {
 /* --- 03c Forms --- */
 /* Input Fields */
 input::placeholder {
-  color: var(--LightM);
+  color: var(--LightL);
   transition: all var(--out);
 }
 input[type='text'], input[type='email'], input[type='password'], input[type='search'] {
   min-width: 45%;
-  background-color: var(--BrandS);
+  background-color: var(--BrandL);
   padding: 15px 20px;
   border: none;
   border-radius: 99px;
@@ -570,8 +575,12 @@ nav .left a:last-of-type {
 }
 /* Search bar */
 input[type='search'] {
+  width: 75vw;
+  padding-left: 30px;
+  box-shadow: 0px 0px 5px var(--DarkL);
   font-weight: 600;
-  width: 45%;
+  font-size: 3.25em;
+  transition: all var(--out);
 }
 input[type='search']::-webkit-search-cancel-button{
   position: relative;
@@ -580,11 +589,17 @@ input[type='search']::-webkit-search-cancel-button{
   background-color: var(--LightL);
   height: 1em;
   width: 1em;
-  border-radius:10px;
+  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+}
+input[type='search']:hover {
+  box-shadow: 0px 0px 15px var(--DarkS);
+  transform: scale(1.01);
+  transition: all var(--in);
 }
 input[type='search']:focus {
-  font-weight: 600;
-  min-width: 55%;
+  box-shadow: 0px 0px 15px var(--DarkS);
+  transform: scale(1);
+  transition: all var(--in);
 }
 /* Suggest box*/
 .suggestBox {
@@ -736,11 +751,4 @@ main.styleguide nav,
 main.styleguide .compact-navbar,
 main.styleguide .menubar,
 main.styleguide footer { margin: 50px 0 !important; position: relative !important; z-index: 50;}
-main.styleguide div.menubar { height: 800px !important; }
-main.styleguide .suggestBox { width: 400px !important; }
-.styleguide .cards-and-slots { width: 540px !important; }
-main.styleguide .card { min-width: 540px !important; }
-main.styleguide .colorbox { 
-  width: 100px;
-  height: 100px;
-}
+
