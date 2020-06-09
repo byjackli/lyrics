@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Navbar, CompactNavbar, Menubar, Footer } from '../components/Navigation';
+import { CompactNavbar, Menubar, Footer } from '../components/Navigation';
 // import { Searchbar, Suggestbox } from '../components/Search';
 import { Queue, Search } from '../components/Nodes';
 import { Button, Intext } from '../components/Clicks';
@@ -19,6 +19,9 @@ class Styleguide extends Component {
                 <h1>Styleguide</h1>
                 <section className="navigation">
                     <h2>Navigation</h2>
+                    <CompactNavbar />
+                    <Menubar />
+                    <Footer />
                 </section>
                 <section className="typography">
                     <h2>Typography</h2>
@@ -113,7 +116,7 @@ class Styleguide extends Component {
                         <Queue add={true} />
                     </div>
                     <div>
-                        <Search page="homepage" placeholder="Search a song"/>
+                        <Search page="homepage" placeholder="Search a song" />
                     </div>
                 </section>
             </main>

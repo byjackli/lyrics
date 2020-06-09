@@ -28,7 +28,7 @@
   --LightS: #FFFFFFBF; /* Clean White byjackli - Suitable for overlays */
 
   /* height */
-  --navheight: 20px;
+  --navheight: 26px;
 
   /* duration */
   --speed0: .1s;
@@ -566,6 +566,7 @@ nav .left a:last-of-type {
   padding: 2px 25px;
   justify-content: space-between;
   position: fixed;
+  background: linear-gradient(0deg, #00000040, #00000040), var(--BrandL);
 }
 .compact-navbar a, .compact-navbar i {
   font-size: 18px;
@@ -743,7 +744,7 @@ main.project .gallery .card {
 
 /* ========= 98 STYLEGUIDE ========= */
 main.styleguide { background-color: #DFDFDF !important; }
-main.styleguide section { margin-bottom: 150px !important; }
+main.styleguide section { margin-bottom: 150px !important; height: fit-content !important; }
 main.styleguide section>* { margin: 50px !important; }
 
 /* Typography */
