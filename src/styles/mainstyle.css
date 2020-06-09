@@ -31,8 +31,9 @@
   --navheight: 20px;
 
   /* duration */
-  --in: .25s;
-  --out: .5s;
+  --speed0: .1s;
+  --speed1: .25s;
+  --speed2: .5s;
 }
 
 
@@ -210,7 +211,7 @@ input[type="submit"] {
   -moz-user-select: none;
   -webkit-user-select: none;
 
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 /* Hover & Focus animation */
 .button-box-fill:hover, .button-box-fill:focus,
@@ -223,7 +224,7 @@ nav .active {
   outline: none;
   color: var(--BrandL);
   background-position: 100% 0%;
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 /* Active (on-click) animation */
 .button-box-fill:active, .button-box-nofill:active,
@@ -258,7 +259,7 @@ nav .active {
 /* In-Text Link */
 a:link, a:visited {
   text-decoration: none;
-  transition: all var(--out);
+  transition: all var(--speed2);
   z-index: 1;
 }
 .intext, .flattext-reg, .flattext-invert { 
@@ -266,7 +267,7 @@ a:link, a:visited {
   background-size: 200% 8px;
   background-repeat: repeat-x;
   background-position: 200% 100%;
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 .flattext-reg, .flattext-invert {
   background-image: linear-gradient( to right, var(--BrandS) 50%, var(--BrandL) 50%);
@@ -284,7 +285,7 @@ a:link, a:visited {
   color: var(--LightL);
   background-size: 200% 100%;
   background-position: 100% 100%;
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 .intext:active { color: var(--DarkS); }
 .intext .fas { width: fit-content; display: inline; }
@@ -292,7 +293,7 @@ a:link, a:visited {
   height: 1.5em;
   bottom: 0;
   background-color: var(--BrandL);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 
 
@@ -310,7 +311,7 @@ a:link, a:visited {
 /* Input Fields */
 input::placeholder {
   color: var(--LightL);
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 input[type='text'], input[type='email'], input[type='password'], input[type='search'] {
   min-width: 45%;
@@ -322,16 +323,16 @@ input[type='text'], input[type='email'], input[type='password'], input[type='sea
 
   font-weight: 400;
   color: var(--LightL);
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 input:focus::placeholder, input:hover::placeholder {
   color: var(--LightS);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 input:focus, input:hover {
   background-color: var(--BrandL);
   outline: none;
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 /* Lists */
 ol {
@@ -355,7 +356,7 @@ ol {
   box-shadow: 0px 2px 2px var(--DarkS);
   overflow: hidden;
   cursor: pointer;
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 .queue-card *, .queue-add * {
   -webkit-user-drag: none;
@@ -377,7 +378,7 @@ ol {
 .queue-card-container:hover .queue-card {
   box-shadow: 0px 3px 7px var(--DarkS);
   transform: scale(1.05);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 /* Queue Settings */
 .queue-settings {
@@ -388,7 +389,7 @@ ol {
   overflow: hidden;
   position: absolute;
   z-index: 0;
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 .queue-settings i {
   width: 2em;
@@ -399,28 +400,28 @@ ol {
   background-color: var(--LightL);
   color: var(--BrandL);
   cursor: pointer;
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 .queue-settings i:hover {
   background-color: var(--BrandL);
   color: var(--LightL);
   transform: scale(1.05);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 .queue-settings i:active {
   transform: scale(.9);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 .queue-card:hover:active {
   transform: scale(1);
   box-shadow: 0px 2px 2px var(--DarkS);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 .queue-card-container:hover .queue-settings {
   height: 100%;
   top: 0;
   right: -3.5em;
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 /* Scroll Animation */ 
 .queue-card div.scroller {
@@ -434,12 +435,12 @@ div.scroller-fg {
   right: 0;
   z-index: 2;
   background-image: linear-gradient(to left, var(--LightL), transparent);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 .queue-card-container:hover .an-scroll div.scroller-fg,
 .an-scroll:hover div.scroller-fg {
   display: none;
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 .scroller p { 
   width: fit-content;
@@ -463,18 +464,18 @@ div.scroller-fg {
   color: var(--BrandL);
   background-color: var(--DarkM);
   margin-bottom: 0; 
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 .queue-add:hover { background-color: var(--LightS); }
 .queue-add:hover * {
   border-color: var(--BrandL);
   color: var(--BrandL);
   transform: scale(1.01);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 .queue-add:active * {
   transform: scale(.99);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 .queue-add>div { 
   width: 16em;
@@ -492,11 +493,11 @@ a.tag {
 
   text-decoration: none;
   color: var(--LightS);
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 a.tag:hover {
   color: var(--LightL);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
 a.tag:last-of-type {
   margin-right: 0;
@@ -545,7 +546,7 @@ nav a {
   color: var(--BrandL);
   font-weight: 600;
   text-decoration: none;
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 .navlink { height: 100%; }
 nav a * { color: var(--BrandL); }
@@ -580,7 +581,7 @@ input[type='search'] {
   box-shadow: 0px 0px 5px var(--DarkL);
   font-weight: 600;
   font-size: 3.25em;
-  transition: all var(--out);
+  transition: all var(--speed2);
 }
 input[type='search']::-webkit-search-cancel-button{
   position: relative;
@@ -591,33 +592,42 @@ input[type='search']::-webkit-search-cancel-button{
   width: 1em;
   clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
 }
-input[type='search']:hover {
+input[type='search']:hover, .search-container:hover .search-res {
   box-shadow: 0px 0px 15px var(--DarkS);
   transform: scale(1.01);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
-input[type='search']:focus {
+input[type='search']:focus, .search-container:active .search-res {
   box-shadow: 0px 0px 15px var(--DarkS);
   transform: scale(1);
-  transition: all var(--in);
+  transition: all var(--speed1);
 }
-/* Suggest box*/
-.suggestBox {
-  width: 100%;
-  max-height: 500px;
-  background-color: var(--BrandL);
+/* Search Results */
+.search-res {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 7em;
+  left: 2em;
+  background-color: var(--LightL);
 }
-.suggestBox ol { padding-left: 0; }
-.suggestBox ol div {
+.search-res ol { padding-left: 0; }
+.search-res li {
   width: 100%;
+  color: var(--LightL);
   border: none;
   padding: 12px 38px;
-  font-weight: 400;
+  transition: all var(--speed2);
+  cursor: pointer;
 }
-.suggestBox ol div:hover {
-  border: none;
-  background-color: var(--DarkS);
+.search-res li:hover * {
   color: var(--LightL);
+  transition: all var(--speed0);
+}
+.search-res li:hover {
+  border: none;
+  background-color: var(--BrandL);
+  transition: all var(--speed0);
 }
 /* Menu bar */
 .App>div.menubar, .menubar {

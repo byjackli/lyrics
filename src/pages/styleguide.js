@@ -113,7 +113,7 @@ class Styleguide extends Component {
                         <Queue add={true} />
                     </div>
                     <div>
-                        <Search placeholder="Search a song"/>
+                        <Search page="homepage" placeholder="Search a song"/>
                     </div>
                 </section>
             </main>
