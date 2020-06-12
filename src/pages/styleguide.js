@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { CompactNavbar, Menubar, Footer } from '../components/Navigation';
-// import { Searchbar, Suggestbox } from '../components/Search';
-import { Queue, Search } from '../components/Nodes';
+import { Queue, Search, Panel } from '../components/Nodes';
 import { Button, Intext } from '../components/Clicks';
 
 
@@ -13,6 +12,10 @@ class Styleguide extends Component {
         }
     }
 
+    componentWillMount(){
+        sessionStorage.setItem("authSpotify", "BQB5LXCgGWk13A6tBnBUs_-0kID7FL6bdObIGYOIhyHbqdmpvhYK43v0b8SsnG04dtR3NGMy_QvT0RnDTLdTkSMrPgSNXNJV8xLeQcuSzwV99VaqFHrwIM-qTuB4xILLIi9xnkCodWzOdImzGDxvt4uhczfrIEsmS6jYmUoQt1qDRcinuoNKN4iIJR9AT2_4bmTJuOO0lSMEJeymGLaPbDg11c52q-vwel21axmA7uNSQvjV8yicvoPQtRw89hCv-VEJX31tgzikxl8");
+        sessionStorage.setItem("authGenius", "rqwX5_DkX-k75Z_0PCaoxvRLqlSaOTXSVbOCVMvT2Xp4TAR2gUR1WaBjumD5K1oF");
+    }
     render() {
         return (
             <main className="styleguide">
@@ -108,16 +111,17 @@ class Styleguide extends Component {
                         <Intext flat={true} invert={true} href="https://www.instagram.com/byjackli" label="flat invert" />
                     </div>
                 </section>
-                <section className="cards-and-slots">
+                <section className="queue-components">
                     <h2>Queue Components</h2>
                     <div>
-                        <Queue id="001" song="IIIIIIIIIIII" artist="WWWWWWWWWWWWWWWWWWW" image="https://i.scdn.co/image/ab67616d00001e0220e08c8cc23f404d723b5647" alt="Next Album Cover" />
-                        <Queue id="002" song="ROCKSTAR (feat. Roddy Ricch)" artist="DaBaby, Roddy Ricch" image="https://i.scdn.co/image/ab67616d00001e0220e08c8cc23f404d723b5647" alt="Next Album Cover" />
+                        <Queue id="001" song="IIIIIIIIIIII" artist={["WWWWWWWWWWWWWWWWWWW"]} image="https://i.scdn.co/image/ab67616d00001e0220e08c8cc23f404d723b5647" alt="Next Album Cover" />
+                        <Queue id="002" song="ROCKSTAR (feat. Roddy Ricch)" artist={["DaBaby", "Roddy Ricch"]} image="https://i.scdn.co/image/ab67616d00001e0220e08c8cc23f404d723b5647" alt="Next Album Cover" />
                         <Queue add={true} />
                     </div>
                     <div>
-                        <Search page="homepage" placeholder="Search a song" />
+                        <Search page="homepage" size="large" placeholder="Search a song" />
                     </div>
+                    <Panel />
                 </section>
             </main>
         )

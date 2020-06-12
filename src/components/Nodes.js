@@ -9,6 +9,8 @@ export class Queue extends Component {
         this.state = {
             songWidth: 0,
             artistWidth: 0,
+            authSpotify: `Bearer ${sessionStorage.getItem("authSpotify")}`,
+            authGenius: `Bearer ${sessionStorage.getItem("authGenius")}`
         }
     }
 
@@ -24,13 +26,69 @@ export class Queue extends Component {
     toggleAdd() {
     }
 
+    play(data, event) {
+
+        fetch("https://api.spotify.com/v1/me/player/play", {
+            body: JSON.stringify({
+                position_ms: 0,
+                uris: data[0]
+            }),
+            headers: {
+                Accept: "application/json",
+                Authorization: this.state.authSpotify,
+                "Content-Type": "application/json"
+            },
+            method: "PUT"
+        })
+        fetch(`https://api.genius.com/search?q=${encodeURIComponent(data[1])}`, {
+            headers: {
+                Authorization: this.state.authGenius,
+                "User-Agent": `CompuServe Classic/1.22`,
+                Accept: `application/json`,
+            },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log("raw results");
+                console.info(result);
+                // if (result.tracks) {
+                //     this.setState({
+                //     });
+                // };
+            });
+    }
+
+    remove(data, event) {
+        console.info(data);
+        fetch("https://api.spotify.com/v1/playlists/0Z5M4GR0LYsWp0OR4wkvXV/tracks", {
+            body: JSON.stringify({
+                tracks: [{
+                    uri: data[0],
+                    positions: data[1]
+                }]
+            }),
+            headers: {
+                Accept: "application/json",
+                Authorization: this.state.authSpotify,
+                "Content-Type": "application/json"
+            },
+            method: "DELETE"
+        })
+            .then(() => {
+                this.props.updatequeue();
+            })
+    }
+
     render() {
 
         if (this.props.add) {
             return (
-                <div className="queue-add vrtCC" onClick={this.toggleAdd.bind(this)}>
-                    <div className="vrtCC">
-                        <p>+ Add to Queue</p>
+                <div className="queue-card-container" >
+                    <div className="queue-add vrtCC" onClick={this.props.onClick}>
+                        <div className="vrtCC">
+                            <p>+ Add to Queue</p>
+                        </div>
                     </div>
                 </div>
             )
@@ -38,8 +96,8 @@ export class Queue extends Component {
         return (
             <div className="queue-card-container">
                 <div className="queue-settings vrtCC">
-                    <i className="vrtCC fas fa-play"></i>
-                    <i className="vrtCC fas fa-times"></i>
+                    <i className="vrtCC fas fa-play" onClick={this.play.bind(this, [[this.props.uri], this.props.song])}></i>
+                    <i className="vrtCC fas fa-times" onClick={this.remove.bind(this, [this.props.uri, [this.props.position]])}></i>
                 </div>
                 <div className="queue-card hrzTL" {...this.props.rest}>
                     <div>
@@ -77,35 +135,32 @@ export class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            oAuth: "BQAmMWXDlZTZkgNlG9vt1hG7uiw-uVSFVuAYuno4D-9fSrTBsOcKD3crhyrgWfreNI8zeDp6Gcy-I4w_Om5--2QHRyccwoFMLgpJk4WbKKLxkXJsL3O2Yu6LwWyOKEoX0vRUC6MdBy5l_5yuLw0PnlWqELtXXdfLhBAEYg7dx6jC6plijpADg9LLx56DrBoUlnS_c2oYMEFbjaVW31rTnHiG4mFodV9Y9AIiTqGRBE7ZOm43u6MuV8oPtiWmn49mztgbqATxhtGmZfc",
+            authSpotify: sessionStorage.getItem("authSpotify"),
             autocomplete: true,
             searchbar: null,
             results: [],
         }
     }
 
-    followUp(data, event) {
-
-        fetch("https://api.spotify.com/v1/me/player/play", {
-            body: JSON.stringify({
-                position_ms: 0,
-                uris: data
-            }),
+    add(data, event) {
+        fetch(`https://api.spotify.com/v1/playlists/0Z5M4GR0LYsWp0OR4wkvXV/tracks?uris=${encodeURIComponent(data)}`, {
             headers: {
                 Accept: "application/json",
-                Authorization: `Bearer ${this.state.oAuth}`,
+                Authorization: `Bearer ${this.state.authSpotify}`,
                 "Content-Type": "application/json"
             },
-            method: "PUT"
+            method: "POST"
+        }).then(() => {
+            this.props.togglesearch();
         })
     }
 
-    searchHandler(event) {
+    searchHandler(event, data) {
         console.info(event.target.id);
         console.info(event.type);
         let limit = 5, searchbar = event.target.id;
 
-        if (event.target.value === "") { this.setState({ results: null }) }
+        if (data === "clear") { this.setState({ results: null }) }
 
         // final search result "entered", show 10 results
         if (event.key === 'Enter') { limit = 10 };
@@ -116,7 +171,7 @@ export class Search extends Component {
             fetch(`https://api.spotify.com/v1/search?q=${event.target.value}&type=track&limit=${limit}`, {
                 headers: {
                     Accept: "application/json",
-                    Authorization: `Bearer ${this.state.oAuth}`,
+                    Authorization: `Bearer ${this.state.authSpotify}`,
                     "Content-Type": "application/json"
                 }
             })
@@ -137,6 +192,7 @@ export class Search extends Component {
         console.log(`Everything in input: ${event.target.value}`)
     }
 
+
     renderSearchResults() {
         if (this.state.results) {
             let i = 0;
@@ -147,7 +203,7 @@ export class Search extends Component {
                             // render each track -- each track should also have a 
                             //     - fetch function to Genius' API for the lyrics 
                             //     - fetch function to Spotify to play song, add to queue, or log in with spotify
-                            <li key={i += 1} onClick={this.followUp.bind(this, [track.uri])}>
+                            <li key={i += 1} onClick={this.add.bind(this, [track.uri])}>
                                 <p>
                                     <span className="style4" >
                                         {track.name}
@@ -172,15 +228,125 @@ export class Search extends Component {
 
         return (
             <div className="search-container">
-                <input type="search" id={`search-${this.props.page}`} {...this.props} onKeyDown={this.searchHandler.bind(this)} onPaste={this.searchHandler.bind(this)} />
+                <input className={`search-${this.props.size}`} type="search" id={`search-${this.props.page}`} onKeyDown={this.searchHandler.bind(this)} onPaste={this.searchHandler.bind(this)} {...this.props} />
                 {this.renderSearchResults()}
             </div>
         )
-        // return (
-        //     <>{this.state.autocomplete ?
-        //         <input type="search" {...this.props} onChange={this.searchHandler.bind(this)} /> :
-        //         <input type="search" {...this.props} onKeyDown={this.searchHandler.bind(this)} />
-        //     }</>
-        // )
+    }
+}
+
+export class Panel extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            panel: false,
+            searchbar: false,
+            queue: [],
+        }
+    }
+
+    componentDidMount() {
+        // fetch queue from spotify
+    }
+
+    toggleSearch() {
+        this.getQueue();
+        this.setState({ searchbar: !this.state.searchbar });
+    }
+    togglePanel() {
+        this.getQueue();
+        this.setState({ panel: !this.state.panel });
+    }
+
+    getQueue() {
+        fetch("https://api.spotify.com/v1/playlists/0Z5M4GR0LYsWp0OR4wkvXV/tracks", {
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("authSpotify")}`,
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log("raw results");
+                console.info(result);
+                if (result && result.items) {
+                    this.setState({
+                        queue: result.items
+                    });
+                    console.log("getQueue was called")
+                };
+            });
+    }
+
+    getArtist(data) {
+        let str = "";
+        for (let i = 0; i < data.length; ++i) {
+            if (i === data.length - 1) { str += data[i].name }
+            else { str += `${data[i].name}, `; }
+        }
+        return str;
+    }
+
+    renderQueue() {
+        if (this.state.queue) {
+
+            let arr = [], i = 0;
+            this.state.queue.forEach(track => {
+                arr.push(
+                    <Queue
+                        key={track.track.id}
+                        id={track.track.id}
+                        song={track.track.name}
+                        artist={this.getArtist(track.track.artists)}
+                        image={track.track.album.images[1].url}
+                        alt={`${track.track.name} Cover Art`}
+                        uri={track.track.uri}
+                        position={i++}
+                        updatequeue={this.getQueue.bind(this)}
+                    />
+                )
+            })
+            console.log("render queue was called, render is successful")
+
+            return (
+                <div className="vrtTC queue-list">
+                    {arr}
+                </div>
+            )
+        }
+        console.log("render queue was called, but failed to render")
+    }
+
+    render() {
+        return (
+            <div className={`panel hrzTL panel-${this.state.panel}`}>
+                <div className="panel-state dragoff vrtCC" onClick={this.togglePanel.bind(this)}>
+                    {this.state.panel ?
+                        <div>» HIDE »</div> :
+                        <div>« SHOW «</div>
+                    }
+                </div>
+                <div className="panel-controls vrtTL">
+                    <div className="panel-search hrzCR">
+                        {this.state.searchbar ?
+                            <>
+                                <Search page="queue" size="small" placeholder="Search a song" togglesearch={this.toggleSearch.bind(this)} />
+                                <i className="vrtCC fas fa-times" onClick={this.toggleSearch.bind(this)}></i>
+                            </> :
+                            <>
+                                <div className="style4 dragoff">SEARCH</div>
+                                <i className="vrtCC fas fa-search" onClick={this.toggleSearch.bind(this)}></i>
+                            </>
+                        }
+                    </div>
+                    <div className="panel-queue vrtTL dragoff">
+                        <h2>Your Queue</h2>
+                        {this.renderQueue()}
+                    </div>
+                </div>
+            </div>
+        )
     }
 }

@@ -45,17 +45,14 @@ export class CompactNavbar extends Component {
         }
     }
 
-    toggleMenu() {
-        this.setState({ menu: !this.state.menu });
-        console.log("pressed")
-    }
+    toggleMenu() { this.setState({ menu: !this.state.menu }); }
 
     render() {
         return (
             <>
                 <div className="compact-navbar">
                     <div className="left">
-                        <Link aria-label="byjackli Menu" onClick={this.toggleMenu.bind(this)} ><i className="fas fa-bars"></i></Link>
+                        <a aria-label="byjackli Menu" onClick={this.toggleMenu.bind(this)} ><i className="fas fa-bars"></i></a>
                         <a href="https://www.byjackli.com/projects">explore more byjackli</a>
                     </div>
                     <div>
