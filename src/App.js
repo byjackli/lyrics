@@ -5,6 +5,7 @@ import './styles/mainstyle.css';
 import './styles/queries.css'
 
 import Styleguide from './pages/Styleguide';
+import Gate from './pages/Gate';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
+          <Route path={"/"} exact component={Gate} />
           <Route path="/styleguide" exact component={Styleguide} />
         </Switch>
       </div>
