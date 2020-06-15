@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Intext } from './Clicks';
+import firebase from '../config/firebase';
 
 
 // Navigation bar, use this on hompage
@@ -52,7 +53,7 @@ export class CompactNavbar extends Component {
             <>
                 <div className="compact-navbar">
                     <div className="left">
-                        <a aria-label="byjackli Menu" onClick={this.toggleMenu.bind(this)} ><i className="fas fa-bars"></i></a>
+                        <button aria-label="byjackli Menu" onClick={this.toggleMenu.bind(this)} ><i className="fas fa-bars"></i></button>
                         <a href="https://www.byjackli.com/projects">explore more byjackli</a>
                     </div>
                     <div>
@@ -80,6 +81,10 @@ export function Menubar(props) {
         else if (1200 < time && time < 1700) { return `Afternoon`; }
         else if (1700 < time && time < 2001) { return `Evening`; }
         else { return `Night`; }
+    }
+    function logout() { 
+        firebase.auth().signOut(); 
+        window.location.assign("/");
     }
 
     return (
@@ -112,7 +117,7 @@ export function Menubar(props) {
                 </div>
             </div>
             <div className="bottom">
-                <Button shape="box" color="fill" href="#" label="sign out" type="fill" />
+                <Button shape="box" color="fill" href="#" label="sign out" type="fill" onClick={logout} />
             </div>
         </div>
     );

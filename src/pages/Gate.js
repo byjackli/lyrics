@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Search } from '../components/Nodes';
 import { Intext } from '../components/Clicks';
 import firebase from '../config/firebase';
 
-class Gate extends Component {
+class Gate extends React.Component {
 
     constructor(props) {
         super(props);
@@ -21,7 +21,7 @@ class Gate extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.analyzer(this.props.match.path);
     }
 
@@ -29,31 +29,12 @@ class Gate extends Component {
         console.info(this.props.match);
         console.info(uri);
 
-        if (window.location.search) { this.confirm(); }
-
         if (uri === "/login") {
             this.togglePortal()
             this.toggleStatus();
         }
         else if (uri === "/signup") {
             this.togglePortal();
-        }
-    }
-    confirm() {
-        if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-            let email = window.localStorage.getItem("emailForSignIn");
-            if (!email) {
-                email = window.prompt("Confirm by re-entering your email.")
-            }
-            firebase.auth().signInWithEmailLink(email, window.location.href)
-                .then(result => {
-                    localStorage.removeItem("emailForSignIn");
-                    localStorage.setItem("user", JSON.stringify(result.user));
-                    this.props.history.push("/")
-
-                    console.info(result.user);
-                    console.info(result);
-                })
         }
     }
 
