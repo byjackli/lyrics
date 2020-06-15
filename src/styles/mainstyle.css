@@ -2,7 +2,7 @@
     01. VARIABLES
     02. GENERAL
     03. COMPONENTS
-    04. RESUME
+    04. GATE
     05. ABOUT
     06. PROJECT
     98. STYLEGUIDE
@@ -40,7 +40,7 @@
 
 
 /* ========= 02 GENERAL ========= */
-html, body, #root, .App, .App>div {
+html, body, #root, .App {
   width: 100%;
   height: 100%;
   background-color: var(--LightL);
@@ -67,37 +67,12 @@ main {
   width: 100%;
   min-height: 100%;
   height: fit-content;
-  padding: 50px 0;
-  padding-top: calc(50px + var(--navheight));
 }
 section {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-}
-.pagecover {
-  width: 100%;
-  height: 100%;
-
-  z-index: 1;
-  overflow: hidden;
-}
-.pagecover-bg {
-  width: 100%; 
-  height: 100%;
-  position: absolute;
-  top: 0;
-  overflow: hidden; 
-
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-
-  filter: blur(.25em);
-  -webkit-filter: blur(.25em);
-  transform: scale(1.2);
-  
-  z-index: 0;
+  padding-top: calc(50px + var(--navheight));
 }
 
 /* headings */
@@ -277,6 +252,7 @@ a:link, a:visited {
   background-repeat: repeat-x;
   background-position: 200% 100%;
   transition: all var(--speed2);
+  cursor: pointer;
 }
 .flattext-reg, .flattext-invert {
   background-image: linear-gradient( to right, var(--BrandS) 50%, var(--BrandL) 50%);
@@ -400,7 +376,7 @@ ol {
   z-index: 0;
   transition: all var(--speed2);
 }
-.queue-settings i, .panel i {
+.queue-settings i, .panel i, .front-form-all i {
   width: 2em;
   height: 2em;
   padding: .25em;
@@ -412,11 +388,11 @@ ol {
   cursor: pointer;
   transition: all var(--speed2);
 }
-.queue-settings i:hover, .panel i:hover {
+.queue-settings i:hover, .panel i:hover, .front-form-all i:hover {
   transform: scale(1.05);
   transition: all var(--speed1);
 }
-.queue-settings i:active, .panel i:active {
+.queue-settings i:active, .panel i:active, .front-form-all i:active {
   transform: scale(.9);
   transition: all var(--speed1);
 }
@@ -754,25 +730,92 @@ footer * {
 }
 footer p { padding-top: 15px; width: 250px;}
 footer ol { padding-left: 100px; }
+
 /* Modals */
-.App>div.modalbg {
+div.modalbg {
   width: 100%;
   height: calc(100% - var(--navheight));
   bottom: 0;
   position: fixed;
   background-color: var(--DarkM);
-  z-index: 97;
+  z-index: -1;
 }
 .invalid, .invalid * { cursor: not-allowed; }
 
 
 
-/* ========= 04 RESUME ========= */
-main.resume>div {
-  padding-bottom: 3%;
+/* ========= 04 GATE ========= */
+.gate .front {
+
 }
-main.resume .card {
-  width: 32%;
+.front .search-container {
+  z-index: 2;
+}
+.front-bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+.front-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  filter: blur(.25em);
+  -webkit-filter: blur(.25em);
+  transform: scale(1.2);
+}
+.front-bg h1 {
+  color: var(--BrandL);
+  font-size: 25vw;
+  z-index: 1;
+}
+
+/* Login/Signup Portal */
+.front-portal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 99;
+}
+.front-form-all {
+  width: 35em;
+  height: 35em;
+  border-radius: 100%;
+  background-color: var(--LightL);
+
+  overflow: hidden;
+}
+.front-form-all * {
+  margin: 10px;
+}
+.front-form-all i { 
+  background-color: var(--BrandL);
+  color: var(--LightL);
+}
+.front-form-status {
+  width: 40%;
+  height: 100%;
+  background-color: var(--BrandL);
+}
+.front-form-status * { color: var(--LightL); }
+.front-form-login, .front-form-signup {
+  width: 60%;
+  height: 100%;
+}
+.portal-modal-true {
+  filter: blur(.25em);
+  -webkit-filter: blur(.25em);
 }
 
 

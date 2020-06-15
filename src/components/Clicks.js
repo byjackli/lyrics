@@ -10,7 +10,7 @@ export function Button({ label, shape, color, ...rest }) {
 
 // Link -- In-Text, Highlighted
 export function Intext({ href, label, flat, invert, ...rest }) {
-    if (!href) { return null; }
+    if (!href) { return <p className="intext" {...rest}>{label}</p>; }
     if (flat) {
         let type = "reg";
 
