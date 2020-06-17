@@ -4,7 +4,7 @@
     03. COMPONENTS
     04. GATE
     05. ABOUT
-    06. PROJECT
+    06. NEXT
     98. STYLEGUIDE
     99. TOP LEVEL
 
@@ -743,6 +743,21 @@ div.modalbg {
 .invalid, .invalid * { cursor: not-allowed; }
 
 
+/* --- 03g Profile --- */
+.profileImage {
+  width: 5em;
+  height: 5em;
+  border: 2px solid var(--BrandL);
+  border-radius: 100%;
+
+  overflow: hidden;
+  
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+
 
 /* ========= 04 GATE ========= */
 .gate .front {
@@ -835,36 +850,42 @@ main.about .right>.card{
 
 
 
-/* ========= 06 PROJECT ========= */
-main.project {
-  padding: 0;
-  padding-top: var(--navheight);
-}
-main.project section { 
-  min-height: 100vh;
-  height: fit-content;
-  overflow: hidden;
-  background-color: var(--LightL);
-
-  z-index: 1;
-}
-main.project section>* {
-  padding: .05em;
-}
-main.project section.details>div {
-  width: 100%;
-  height: 100%;
-}
-main.project ol:not(:first-of-type) { width: 35%; }
-main.project .links li { padding: .5em;}
-main.project .gallery {
-  width: 75%;
-  display: flex;
+/* ========= 06 NEXT ========= */
+.next-nav, .next-form, .next-buttons { width: 70%; }
+.next-nav {
+  height: 30%;
+  padding-left: 10%;
   flex-wrap: wrap;
 }
-main.project .gallery .card { 
-  width: 30%; 
-  margin: 1%;
+
+.next-form {
+  height: 60%;
+  overflow-y: auto;
+}
+.next-form>div { margin-bottom: 1em; }
+.next-form>div:last-of-type { margin-bottom: 0; }
+.next-error { 
+  position: absolute; 
+  bottom: -.5em;
+  left: 0;
+  background-color: var(--DarkL);
+  color: var(--LightL);
+}
+
+.next-buttons { height: 10%; }
+
+main.next div.supercede a.button-root div {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: .5em .5em 0 0;
+}
+main.next div.supercede a.button-root:last-child div { margin-right: 0;}
+main.next div.supercede section.confirm .next-form>div>div {
+  margin-bottom: 2em;
 }
 
 

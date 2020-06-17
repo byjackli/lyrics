@@ -53,7 +53,7 @@ export class CompactNavbar extends Component {
             <>
                 <div className="compact-navbar">
                     <div className="left">
-                        <button aria-label="byjackli Menu" onClick={this.toggleMenu.bind(this)} ><i className="fas fa-bars"></i></button>
+                        <a aria-label="byjackli Menu" onClick={this.toggleMenu.bind(this)} ><i className="fas fa-bars"></i></a>
                         <a href="https://www.byjackli.com/projects">explore more byjackli</a>
                     </div>
                     <div>

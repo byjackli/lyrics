@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import firebase from './config/firebase';
+import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from './config/spotify';
 
 import './styles/mainstyle.css';
 import './styles/queries.css'
@@ -32,29 +33,49 @@ class App extends React.Component {
         .then(result => {
           localStorage.removeItem("emailForSignIn");
           localStorage.setItem("user", JSON.stringify(result.user));
-          window.location.replace("/");
 
           console.info(result.user);
           console.info(result);
+          window.location.replace("/");
         })
     }
   }
 
   componentDidMount() {
     console.info("didMount", this.state.user);
+
+    // application authentication (protected pages & page re-direction)
+    const db = firebase.firestore();
     if (window.location.search) {
       this.confirm();
     }
-
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState({
-          pages: <>
-            <Route path="/" exact component={Styleguide} />
-            <Route path="/next" exact component={Next} />
-          </>,
-          user: user
-        })
+        console.info(user.uid)
+        db.collection("users").doc(user.uid).get()
+          .then(doc => {
+            if (!doc.exists || (doc.exists && !doc.data().done)) {
+              this.setState({
+                pages: <>
+                  <Route path="/" exact component={Next} />
+                  <Route path="/spotifyAuth" exact component={Next} />
+                  <Route path="/geniusAuth" exact component={Next} />
+                </>,
+                user: user
+              })
+            }
+            else {
+              console.info(user)
+              this.setState({
+                pages: <Route path="/" exact component={Styleguide} />,
+                user: user
+              })
+
+              // API token request manager
+              if (localStorage.getItem("spotifyRefresh") && user.spotifyAuth) { this.spotifyTokenInterval = setInterval(this.spotifyTokenRefresh, 3500000); }
+              // if (localStorage.getItem("geniusRefresh") && user.geniusAuth) { this.geniusTokenInterval = setInterval(this.geniusTokenRefresh, 3500000); }
+            }
+          })
       }
       else {
         this.setState({
@@ -68,6 +89,41 @@ class App extends React.Component {
       }
     });
   }
+  componentWillUnmount() {
+    clearInterval(this.spotifyTokenInterval);
+    clearInterval(this.geniusTokenInterval);
+  }
+
+  spotifyTokenRefresh() {
+    fetch(`https://accounts.spotify.com/api/token`, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `grant_type=refresh_token&refresh_token=${localStorage.getItem("spotifyRefresh")}&redirect_uri=${REDIRECT_URI}`
+    })
+      .then(res => res.json())
+      .then(result => {
+        console.info("spotify refresh token result", result);
+        localStorage.setItem("spotifyToken", result.access_token);
+      });
+  }
+  // geniusTokenRefresh() {
+  //   fetch(`https://accounts.spotify.com/api/token`, {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
+  //       "Content-Type": "application/x-www-form-urlencoded"
+  //     },
+  //     body: `grant_type=refresh_token&refresh_token=${localStorage.getItem("spotifyRefresh")}&redirect_uri=${REDIRECT_URI}`
+  //   })
+  //     .then(res => res.json())
+  //     .then(result => {
+  //       console.info("genius refresh token result", result);
+  //       localStorage.setItem("geniusToken", result.access_token);
+  //     });
+  // }
 
   render() {
     console.info("didRender", this.state.pages);
