@@ -2,9 +2,9 @@
     01. VARIABLES
     02. GENERAL
     03. COMPONENTS
-    04. RESUME
+    04. GATE
     05. ABOUT
-    06. PROJECT
+    06. NEXT
     98. STYLEGUIDE
     99. TOP LEVEL
 
@@ -40,7 +40,7 @@
 
 
 /* ========= 02 GENERAL ========= */
-html, body, #root, .App, .App>div {
+html, body, #root, .App {
   width: 100%;
   height: 100%;
   background-color: var(--LightL);
@@ -67,37 +67,12 @@ main {
   width: 100%;
   min-height: 100%;
   height: fit-content;
-  padding: 50px 0;
-  padding-top: calc(50px + var(--navheight));
 }
 section {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-}
-.pagecover {
-  width: 100%;
-  height: 100%;
-
-  z-index: 1;
-  overflow: hidden;
-}
-.pagecover-bg {
-  width: 100%; 
-  height: 100%;
-  position: absolute;
-  top: 0;
-  overflow: hidden; 
-
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-
-  filter: blur(.25em);
-  -webkit-filter: blur(.25em);
-  transform: scale(1.2);
-  
-  z-index: 0;
+  padding-top: calc(50px + var(--navheight));
 }
 
 /* headings */
@@ -277,6 +252,7 @@ a:link, a:visited {
   background-repeat: repeat-x;
   background-position: 200% 100%;
   transition: all var(--speed2);
+  cursor: pointer;
 }
 .flattext-reg, .flattext-invert {
   background-image: linear-gradient( to right, var(--BrandS) 50%, var(--BrandL) 50%);
@@ -400,7 +376,7 @@ ol {
   z-index: 0;
   transition: all var(--speed2);
 }
-.queue-settings i, .panel i {
+.queue-settings i, .panel i, .front-form-all i {
   width: 2em;
   height: 2em;
   padding: .25em;
@@ -412,11 +388,11 @@ ol {
   cursor: pointer;
   transition: all var(--speed2);
 }
-.queue-settings i:hover, .panel i:hover {
+.queue-settings i:hover, .panel i:hover, .front-form-all i:hover {
   transform: scale(1.05);
   transition: all var(--speed1);
 }
-.queue-settings i:active, .panel i:active {
+.queue-settings i:active, .panel i:active, .front-form-all i:active {
   transform: scale(.9);
   transition: all var(--speed1);
 }
@@ -754,25 +730,107 @@ footer * {
 }
 footer p { padding-top: 15px; width: 250px;}
 footer ol { padding-left: 100px; }
+
 /* Modals */
-.App>div.modalbg {
+div.modalbg {
   width: 100%;
   height: calc(100% - var(--navheight));
   bottom: 0;
   position: fixed;
   background-color: var(--DarkM);
-  z-index: 97;
+  z-index: -1;
 }
 .invalid, .invalid * { cursor: not-allowed; }
 
 
+/* --- 03g Profile --- */
+.profileImage {
+  width: 5em;
+  height: 5em;
+  border: 2px solid var(--BrandL);
+  border-radius: 100%;
 
-/* ========= 04 RESUME ========= */
-main.resume>div {
-  padding-bottom: 3%;
+  overflow: hidden;
+  
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
-main.resume .card {
-  width: 32%;
+
+
+
+/* ========= 04 GATE ========= */
+.gate .front {
+
+}
+.front .search-container {
+  z-index: 2;
+}
+.front-bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+.front-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  filter: blur(.25em);
+  -webkit-filter: blur(.25em);
+  transform: scale(1.2);
+}
+.front-bg h1 {
+  color: var(--BrandL);
+  font-size: 25vw;
+  z-index: 1;
+}
+
+/* Login/Signup Portal */
+.front-portal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 99;
+}
+.front-form-all {
+  width: 35em;
+  height: 35em;
+  border-radius: 100%;
+  background-color: var(--LightL);
+
+  overflow: hidden;
+}
+.front-form-all * {
+  margin: 10px;
+}
+.front-form-all i { 
+  background-color: var(--BrandL);
+  color: var(--LightL);
+}
+.front-form-status {
+  width: 40%;
+  height: 100%;
+  background-color: var(--BrandL);
+}
+.front-form-status * { color: var(--LightL); }
+.front-form-login, .front-form-signup {
+  width: 60%;
+  height: 100%;
+}
+.portal-modal-true {
+  filter: blur(.25em);
+  -webkit-filter: blur(.25em);
 }
 
 
@@ -792,36 +850,42 @@ main.about .right>.card{
 
 
 
-/* ========= 06 PROJECT ========= */
-main.project {
-  padding: 0;
-  padding-top: var(--navheight);
-}
-main.project section { 
-  min-height: 100vh;
-  height: fit-content;
-  overflow: hidden;
-  background-color: var(--LightL);
-
-  z-index: 1;
-}
-main.project section>* {
-  padding: .05em;
-}
-main.project section.details>div {
-  width: 100%;
-  height: 100%;
-}
-main.project ol:not(:first-of-type) { width: 35%; }
-main.project .links li { padding: .5em;}
-main.project .gallery {
-  width: 75%;
-  display: flex;
+/* ========= 06 NEXT ========= */
+.next-nav, .next-form, .next-buttons { width: 70%; }
+.next-nav {
+  height: 30%;
+  padding-left: 10%;
   flex-wrap: wrap;
 }
-main.project .gallery .card { 
-  width: 30%; 
-  margin: 1%;
+
+.next-form {
+  height: 60%;
+  overflow-y: auto;
+}
+.next-form>div { margin-bottom: 1em; }
+.next-form>div:last-of-type { margin-bottom: 0; }
+.next-error { 
+  position: absolute; 
+  bottom: -.5em;
+  left: 0;
+  background-color: var(--DarkL);
+  color: var(--LightL);
+}
+
+.next-buttons { height: 10%; }
+
+main.next div.supercede a.button-root div {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: .5em .5em 0 0;
+}
+main.next div.supercede a.button-root:last-child div { margin-right: 0;}
+main.next div.supercede section.confirm .next-form>div>div {
+  margin-bottom: 2em;
 }
 
 

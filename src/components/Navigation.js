@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Intext } from './Clicks';
+import firebase from '../config/firebase';
 
 
 // Navigation bar, use this on hompage
@@ -81,6 +82,10 @@ export function Menubar(props) {
         else if (1700 < time && time < 2001) { return `Evening`; }
         else { return `Night`; }
     }
+    function logout() { 
+        firebase.auth().signOut(); 
+        window.location.assign("/");
+    }
 
     return (
         <div className="menubar vrtTL">
@@ -112,7 +117,7 @@ export function Menubar(props) {
                 </div>
             </div>
             <div className="bottom">
-                <Button shape="box" color="fill" href="#" label="sign out" type="fill" />
+                <Button shape="box" color="fill" href="#" label="sign out" type="fill" onClick={logout} />
             </div>
         </div>
     );
