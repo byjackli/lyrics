@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import firebase from './config/firebase';
-import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from './config/spotify';
+import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI } from './config/spotify';
 
 import './styles/mainstyle.css';
 import './styles/queries.css'
@@ -72,8 +72,33 @@ class App extends React.Component {
               })
 
               // API token request manager
-              if (localStorage.getItem("spotifyRefresh") && user.spotifyAuth) { this.spotifyTokenInterval = setInterval(this.spotifyTokenRefresh, 3500000); }
-              // if (localStorage.getItem("geniusRefresh") && user.geniusAuth) { this.geniusTokenInterval = setInterval(this.geniusTokenRefresh, 3500000); }
+              if (localStorage.getItem("spotifyRefresh") && doc.data().spotifyAuth) { this.spotifyTokenInterval = setInterval(this.spotifyTokenRefresh, 3500000); }
+
+              // if (window.location.href.includes("spotifyAuth?code=") || localStorage.getItem("spotifyAuth") || doc.data().spotifyAuth) {
+              //   let spotifyAuth = window.location.href.split("?code=")[1];
+              //   if (doc.data().spotifyAuth) { spotifyAuth = doc.data().spotifyAuth; }
+              //   localStorage.setItem("spotifyAuth", window.location.href.split("?code=")[1]);
+              //   fetch(`https://accounts.spotify.com/api/token`, {
+              //     method: "POST",
+              //     headers: {
+              //       Authorization: `Basic ${btoa(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`)}`,
+              //       "Content-Type": "application/x-www-form-urlencoded"
+              //     },
+              //     body: `grant_type=authorization_code&code=${spotifyAuth}&redirect_uri=${SPOTIFY_REDIRECT_URI}`
+              //   })
+              //     .then(res => res.json())
+              //     .then(result => {
+              //       console.info("result from API token req", result);
+              //       localStorage.setItem("spotifyToken", result.access_token);
+              //       localStorage.setItem("spotifyRefresh", result.refresh_token);
+              //       this.spotifyTokenInterval = setInterval(this.spotifyTokenRefresh, 6000);
+              //     });
+              // }
+              // if (window.location.href.includes("geniusAuth?code=") || localStorage.getItem("geniusAuth") || doc.data().spotifyAuth) {
+              //   let geniusAuth = window.location.href.split("?code=")[1];
+              //   if (doc.data().geniusAuth) { geniusAuth = doc.data().geniusAuth; }
+              //   localStorage.setItem("geniusAuth", geniusAuth);
+              // }
             }
           })
       }
@@ -91,17 +116,16 @@ class App extends React.Component {
   }
   componentWillUnmount() {
     clearInterval(this.spotifyTokenInterval);
-    clearInterval(this.geniusTokenInterval);
   }
 
   spotifyTokenRefresh() {
     fetch(`https://accounts.spotify.com/api/token`, {
       method: "POST",
       headers: {
-        Authorization: `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
+        Authorization: `Basic ${btoa(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`)}`,
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: `grant_type=refresh_token&refresh_token=${localStorage.getItem("spotifyRefresh")}&redirect_uri=${REDIRECT_URI}`
+      body: `grant_type=refresh_token&refresh_token=${localStorage.getItem("spotifyRefresh")}&redirect_uri=${SPOTIFY_REDIRECT_URI}`
     })
       .then(res => res.json())
       .then(result => {

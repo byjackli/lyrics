@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from '../components/Clicks';
 import firebase from '../config/firebase';
-import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, SCOPES } from '../config/spotify';
+import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI, SPOTIFY_SCOPES } from '../config/spotify';
+import { GENIUS_CLIENT_ID, GENIUS_CLIENT_SECRET, GENIUS_REDIRECT_URI } from '../config/genius';
 
 class Next extends React.Component {
 
@@ -57,10 +58,10 @@ class Next extends React.Component {
             fetch(`https://accounts.spotify.com/api/token`, {
                 method: "POST",
                 headers: {
-                    Authorization: `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
+                    Authorization: `Basic ${btoa(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`)}`,
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body: `grant_type=authorization_code&code=${window.location.href.split("?code=")[1]}&redirect_uri=${REDIRECT_URI}`
+                body: `grant_type=authorization_code&code=${window.location.href.split("?code=")[1]}&redirect_uri=${SPOTIFY_REDIRECT_URI}`
             })
                 .then(res => res.json())
                 .then(result => {
@@ -72,7 +73,7 @@ class Next extends React.Component {
         }
         if (window.location.href.includes("geniusAuth?code=") || localStorage.getItem("geniusAuth")) {
             localStorage.setItem("geniusAuth", window.location.href.split("?code=")[1]);
-            this.setState({ geniusAcc: "Connected" });
+            this.setState({ geniusAcc: "Connected", curPage: "confirm" });
         }
     }
     componentWillUnmount() {
@@ -84,10 +85,10 @@ class Next extends React.Component {
         fetch(`https://accounts.spotify.com/api/token`, {
             method: "POST",
             headers: {
-                Authorization: `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
+                Authorization: `Basic ${btoa(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`)}`,
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: `grant_type=refresh_token&refresh_token=${localStorage.getItem("spotifyRefresh")}&redirect_uri=${REDIRECT_URI}`
+            body: `grant_type=refresh_token&refresh_token=${localStorage.getItem("spotifyRefresh")}&redirect_uri=${SPOTIFY_REDIRECT_URI}`
         })
             .then(res => res.json())
             .then(result => {
@@ -217,7 +218,7 @@ class Next extends React.Component {
                 <div className="hrzCC">
                     <Button shape="pill" color="fill" label="skip" id="skip-spotify" onClick={this.changePage.bind(this, 1)} />
                     <Button shape="pill" color="fill" label="authenticate"
-                        href={`https://accounts.spotify.com/authorize?response_type=code&client_id=${CLIENT_ID}${SCOPES ? `&scope=${encodeURIComponent(SCOPES)}` : ''}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`}
+                        href={`https://accounts.spotify.com/authorize?response_type=code&client_id=${SPOTIFY_CLIENT_ID}${SPOTIFY_SCOPES ? `&scope=${encodeURIComponent(SPOTIFY_SCOPES)}` : ''}&redirect_uri=${encodeURIComponent(SPOTIFY_REDIRECT_URI)}`}
                     />
                 </div>
             </>
@@ -233,7 +234,7 @@ class Next extends React.Component {
                 <div className="hrzCC">
                     <Button shape="pill" color="fill" label="skip" id="skip-genius" onClick={this.changePage.bind(this, 1)} />
                     <Button shape="pill" color="fill" label="authenticate"
-                        href={`https://accounts.spotify.com/authorize?response_type=code&client_id=${CLIENT_ID}${SCOPES ? `&scope=${encodeURIComponent(SCOPES)}` : ''}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`}
+                        href={`https://api.genius.com/oauth/authorize?response_type=code&client_id=${GENIUS_CLIENT_ID}&redirect_uri=${encodeURIComponent(GENIUS_REDIRECT_URI)}`}
                     />
                 </div>
             </>
