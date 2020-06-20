@@ -8,9 +8,7 @@ export class Queue extends Component {
         super(props);
         this.state = {
             songWidth: 0,
-            artistWidth: 0,
-            authSpotify: `Bearer ${sessionStorage.getItem("authSpotify")}`,
-            authGenius: `Bearer ${sessionStorage.getItem("authGenius")}`
+            artistWidth: 0
         }
     }
 
@@ -29,29 +27,33 @@ export class Queue extends Component {
     play(data, event) {
 
         fetch("https://api.spotify.com/v1/me/player/play", {
+            method: "PUT",
             body: JSON.stringify({
                 position_ms: 0,
-                uris: data[0]
+                offset: { position: data[0][0] },
+                context_uri: `spotify:playlist:${localStorage.getItem("queueID")}`
             }),
             headers: {
                 Accept: "application/json",
-                Authorization: this.state.authSpotify,
+                Authorization: `Bearer ${localStorage.getItem("spotifyToken")}`,
                 "Content-Type": "application/json"
-            },
-            method: "PUT"
+            }
         })
-        fetch(`https://api.genius.com/search?q=${encodeURIComponent(data[1])}`, {
-            headers: {
-                Authorization: this.state.authGenius,
-                "User-Agent": `CompuServe Classic/1.22`,
-                Accept: `application/json`,
-            },
+        let
+            song = data[1].split("(")[0],
+            artist = data[2].split(",")[0];
+
+        this.props.titleupdater(data[1]);
+        this.props.artistupdater(data[2]);
+
+        fetch(`https://api.lyrics.ovh/v1/${artist}/${song}`, {
             method: "GET"
         })
             .then(res => res.json())
             .then(result => {
                 console.log("raw results");
-                console.info(result);
+                console.info(result.lyrics);
+                this.props.lyricupdater(result.lyrics)
                 // if (result.tracks) {
                 //     this.setState({
                 //     });
@@ -61,7 +63,8 @@ export class Queue extends Component {
 
     remove(data, event) {
         console.info(data);
-        fetch("https://api.spotify.com/v1/playlists/0Z5M4GR0LYsWp0OR4wkvXV/tracks", {
+        fetch(`https://api.spotify.com/v1/playlists/${localStorage.getItem("queueID")}/tracks`, {
+            method: "DELETE",
             body: JSON.stringify({
                 tracks: [{
                     uri: data[0],
@@ -70,10 +73,9 @@ export class Queue extends Component {
             }),
             headers: {
                 Accept: "application/json",
-                Authorization: this.state.authSpotify,
+                Authorization: `Bearer ${localStorage.getItem("spotifyToken")}`,
                 "Content-Type": "application/json"
-            },
-            method: "DELETE"
+            }
         })
             .then(() => {
                 this.props.updatequeue();
@@ -96,7 +98,7 @@ export class Queue extends Component {
         return (
             <div className="queue-card-container">
                 <div className="queue-settings vrtCC">
-                    <i className="vrtCC fas fa-play" onClick={this.play.bind(this, [[this.props.uri], this.props.song])}></i>
+                    <i className="vrtCC fas fa-play" onClick={this.play.bind(this, [[this.props.position], this.props.song, this.props.artist])}></i>
                     <i className="vrtCC fas fa-times" onClick={this.remove.bind(this, [this.props.uri, [this.props.position]])}></i>
                 </div>
                 <div className="queue-card hrzTL" {...this.props.rest}>
@@ -143,13 +145,13 @@ export class Search extends Component {
     }
 
     add(data, event) {
-        fetch(`https://api.spotify.com/v1/playlists/0Z5M4GR0LYsWp0OR4wkvXV/tracks?uris=${encodeURIComponent(data)}`, {
+        fetch(`https://api.spotify.com/v1/playlists/${localStorage.getItem("queueID")}/tracks?uris=${encodeURIComponent(data)}`, {
+            method: "POST",
             headers: {
                 Accept: "application/json",
-                Authorization: `Bearer ${this.state.authSpotify}`,
+                Authorization: `Bearer ${localStorage.getItem("spotifyToken")}`,
                 "Content-Type": "application/json"
-            },
-            method: "POST"
+            }
         }).then(() => {
             this.props.togglesearch();
         })
@@ -171,7 +173,7 @@ export class Search extends Component {
             fetch(`https://api.spotify.com/v1/search?q=${event.target.value}&type=track&limit=${limit}`, {
                 headers: {
                     Accept: "application/json",
-                    Authorization: `Bearer ${this.state.authSpotify}`,
+                    Authorization: `Bearer ${localStorage.getItem("spotifyToken")}`,
                     "Content-Type": "application/json"
                 }
             })
@@ -260,10 +262,10 @@ export class Panel extends Component {
     }
 
     getQueue() {
-        fetch("https://api.spotify.com/v1/playlists/0Z5M4GR0LYsWp0OR4wkvXV/tracks", {
+        fetch(`https://api.spotify.com/v1/playlists/${localStorage.getItem("queueID")}/tracks`, {
             headers: {
                 Accept: "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("authSpotify")}`,
+                Authorization: `Bearer ${localStorage.getItem("spotifyToken")}`,
                 "Content-Type": "application/json"
             }
         })
@@ -305,6 +307,9 @@ export class Panel extends Component {
                         uri={track.track.uri}
                         position={i++}
                         updatequeue={this.getQueue.bind(this)}
+                        titleupdater={this.props.updatetitle}
+                        artistupdater={this.props.updateartist}
+                        lyricupdater={this.props.updatelyrics}
                     />
                 )
             })

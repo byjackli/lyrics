@@ -84,6 +84,7 @@ export function Menubar(props) {
     }
     function logout() { 
         firebase.auth().signOut(); 
+        localStorage.clear();
         window.location.assign("/");
     }
 
