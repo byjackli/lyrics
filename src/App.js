@@ -11,7 +11,7 @@ import Styleguide from './pages/styleguide';
 import Gate from './pages/gate';
 import Next from './pages/next';
 import Lyrics from './pages/lyrics';
-import { CompactNavbar } from './components/Navigation';
+import { CompactNavbar, Footer } from './components/Navigation';
 
 class App extends React.Component {
 
@@ -198,7 +198,7 @@ class App extends React.Component {
             {this.state.pages}
             <Route path="/styleguide" exact component={Styleguide} />
           </Switch>
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </Router >
     )

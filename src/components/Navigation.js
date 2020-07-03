@@ -57,7 +57,7 @@ export class CompactNavbar extends Component {
                         <a href="https://www.byjackli.com/projects">explore more byjackli</a>
                     </div>
                     <div>
-                        <Link to={`/project/${this.props.uri}`}>click to learn more about this project</Link>
+                        <a href={`https://byjackli.com/project/lyrics`}>click to learn more about this project</a>
                     </div>
                 </div>
                 {this.state.menu && (
@@ -96,18 +96,18 @@ export function Menubar(props) {
                     <p>Greetings and Good {greetings()}!</p>
                     <ol>
                         <li>Jack</li>
-                        <li><Button shape="box" color="nofill" href="/resume" label="Resume" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="/about" label="About" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="/about" label="Contact" className="type4" /></li>
+                        <li><Button shape="box" color="nofill" href="https://byjackli.com/resume" label="Resume" className="type4" /></li>
+                        <li><Button shape="box" color="nofill" href="https://byjackli.com/about" label="About" className="type4" /></li>
+                        <li><Button shape="box" color="nofill" href="https://byjackli.com/contact" label="Contact" className="type4" /></li>
                     </ol>
                     <ol>
                         <li>Projects</li>
-                        <li><Button shape="box" color="nofill" href="/project" label="See All" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="/project/travel" label="Travel" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="/project/photos" label="Photos" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="/project/focus" label="Focus" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="/project/lyrics" label="Lyrics" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="/project/playlist" label="Playlist" className="type4" /></li>
+                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project" label="See All" className="type4" /></li>
+                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/travel" label="Travel" className="type4" /></li>
+                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/photos" label="Photos" className="type4" /></li>
+                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/focus" label="Focus" className="type4" /></li>
+                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/lyrics" label="Lyrics" className="type4" /></li>
+                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/playlist" label="Playlist" className="type4" /></li>
                     </ol>
                     <ol>
                         <li>Account</li>

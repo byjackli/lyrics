@@ -740,7 +740,7 @@ div.modalbg {
   bottom: 0;
   position: fixed;
   background-color: var(--DarkM);
-  z-index: -1;
+  z-index: 98;
 }
 .invalid, .invalid * { cursor: not-allowed; }
 
