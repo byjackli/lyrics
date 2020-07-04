@@ -110,9 +110,9 @@ class Gate extends React.Component {
                         {/* <PillFill label="SIGN UP" OnClick={this.toggleSignup.bind(this)} /> */}
                         {/* <Intext label="LOG IN" OnClick={this.toggleLogin.bind(this)} /> */}
                     </section>
-                    <section className="about">
+                    {/* <section className="about">
                         <h1>ABOUT</h1>
-                    </section>
+                    </section> */}
                 </main>
             </>
         )

@@ -43,8 +43,8 @@
 
 /* ========= 02 GENERAL ========= */
 html, body, #root, .App {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: var(--LightL);
 }
 
@@ -71,8 +71,10 @@ main {
   height: fit-content;
 }
 section {
-  width: 100%;
-  height: 100vh;
+  width: 100vw;
+  min-width: 100%;
+  height: fit-content;
+  min-height: 100vh;
   overflow: hidden;
   padding-top: calc(50px + var(--navheight));
 }
@@ -111,9 +113,10 @@ h5, .style5 { font-size: 1rem; }
 strong { font-weight: 600; }
 
 /* paragraph */
-.content {
-  word-break: break-all;
+.content { 
   white-space: pre-line;
+  word-wrap: break-word;
+  word-break: normal;
 }
 .middle p {
   /* line-height: 2em; */
@@ -142,6 +145,7 @@ strong { font-weight: 600; }
 /* scrollbar */
 *::-webkit-scrollbar {
   width: .5rem;
+  height: .5rem;
   border-radius: 15px;
 } 
 *::-webkit-scrollbar-track {
@@ -168,6 +172,24 @@ strong { font-weight: 600; }
 
 /* ========= 03 COMPONENTS ========= */
 /* --- 03a Buttons and Links --- */
+button { 
+  padding: 0;
+  min-height: 15px;
+  min-width: 20px;
+  border: none; 
+  outline: none; 
+  cursor: pointer;
+  transition: all var(--speed2);
+  background-color: transparent;
+}
+button:hover {
+  transition: all var(--speed0);
+  transform: scale(1.1);
+}
+button:active i {
+  transition: all var(--speed0);
+  transform: scale(0);
+}
 .button-root { 
   display: inline-block; 
 }
@@ -354,9 +376,6 @@ ol {
 .queue-card img {
   width: 5em;
 }
-.queue-card>div:nth-child(2) {
-  width: 5em;
-}
 .queue-card>div:last-child {
   height: 100%;
   width: 12em;
@@ -493,7 +512,7 @@ a.tag:last-of-type {
 /* --- 03e Panel Components --- */
 .panel {
   height: 65vh;
-  width: 476px;
+  width: 456px;
   position: absolute;
   top: 10%;
   right: 0px;
@@ -504,7 +523,7 @@ a.tag:last-of-type {
   transition: all var(--speed0);
 }
 .panel-search>.style4, .panel-state *, .panel-queue h2 { color: var(--LightL); }
-.panel>div:last-of-type { padding: 20px 0 20px 20px; }
+.panel>div:last-of-type { padding: 20px 0; }
 .panel-state {
   height: 100%;
   width: 50px;
@@ -518,7 +537,7 @@ a.tag:last-of-type {
   transition: all var(--speed1);
 }
 .panel-false {
-  right: -426px;
+  right: -406px;
   transition: all var(--speed2);
 }
 .panel-false:hover {
@@ -559,7 +578,7 @@ nav, nav .left, .compact-navbar, nav div {
   z-index: 99;
 }
 nav>div, .compact-navbar {
-  width: 100%;
+  width: 100vw;
   padding: 0 25px;
   flex: auto;
 }
@@ -608,7 +627,7 @@ nav .left a:last-of-type {
 }
 /* Compact Navigation */
 .compact-navbar {
-  height: fit-content;
+  height: 26px;
   padding: 2px 25px;
   justify-content: space-between;
   position: fixed;
@@ -721,15 +740,16 @@ input[type='search']:focus, .search-container:active .search-res {
 .menubar ol li:first-of-type { color: var(--DarkM); }
 /* Footer */
 footer.hrzTL {
-  width: 100%;
+  width: var(--width);
+  max-width: 100%;
   height: fit-content;
   background-color: var(--BrandL);
   padding: 45px;
   justify-content: space-between;
+  overflow: hidden;
+  z-index: 1;
 }
-footer * {
-  color: var(--LightL);
-}
+footer * { color: var(--LightL); }
 footer p { padding-top: 15px; width: 250px;}
 footer ol { padding-left: 100px; }
 
@@ -791,7 +811,7 @@ div.modalbg {
 }
 .front-bg h1 {
   color: var(--BrandL);
-  font-size: 25vw;
+  font-size: 32vw;
   z-index: 1;
 }
 
@@ -808,6 +828,7 @@ div.modalbg {
   border-radius: 100%;
   background-color: var(--LightL);
 
+  z-index: 99;
   overflow: hidden;
 }
 .front-form-all * {
@@ -890,6 +911,7 @@ main.next div.supercede section.confirm .next-form>div>div {
 
 
 /* ========= 07 LYRICS ========= */
+.lyrics-section { height: 100vh; }
 .lyrics-data {
   width: 50%;
   height: 80%;
@@ -939,6 +961,7 @@ section.settings .header {
   position: absolute;
   top: 75px;
   left: 0px;
+  overflow: overlay;
 }
 path { fill: transparent;}
 section.settings>div {

@@ -53,11 +53,15 @@ export class CompactNavbar extends Component {
             <>
                 <div className="compact-navbar">
                     <div className="left">
-                        <a aria-label="byjackli Menu" onClick={this.toggleMenu.bind(this)} ><i className="fas fa-bars"></i></a>
+                        <button className="dragoff" aria-label="Menu" onClick={this.toggleMenu.bind(this)}>{
+                            this.state.menu
+                                ? <i className="style3 fas fa-times"></i>
+                                : <i className="style3 fas fa-bars"></i>
+                        }</button>
                         <a href="https://www.byjackli.com/projects">explore more byjackli</a>
                     </div>
                     <div>
-                        <a href={`https://byjackli.com/project/lyrics`}>click to learn more about this project</a>
+                        <a href={`https://byjackli.com/project/lyrics`}>learn more about this project</a>
                     </div>
                 </div>
                 {this.state.menu && (
@@ -82,8 +86,8 @@ export function Menubar(props) {
         else if (1700 < time && time < 2001) { return `Evening`; }
         else { return `Night`; }
     }
-    function logout() { 
-        firebase.auth().signOut(); 
+    function logout() {
+        firebase.auth().signOut();
         localStorage.clear();
         window.location.assign("/");
     }
@@ -91,29 +95,24 @@ export function Menubar(props) {
     return (
         <div className="menubar vrtTL">
             <div className="top">
-                <Button label="close menu" shape="box" color="fill" onClick={props.toggleMenu} />
                 <div className="categories">
                     <p>Greetings and Good {greetings()}!</p>
-                    <ol>
+                    <ol role="group" aria-label="pages">
                         <li>Jack</li>
-                        <li><Button shape="box" color="nofill" href="https://byjackli.com/resume" label="Resume" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="https://byjackli.com/about" label="About" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="https://byjackli.com/contact" label="Contact" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="https://byjackli.com/resume" label="Resume" type="nofill" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="https://byjackli.com/about" label="About" type="nofill" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="https://byjackli.com/projects" label="Projects" type="nofill" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="https://byjackli.com/about" label="Contact" type="nofill" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="/styleguide" label="Styleguide" type="nofill" className="type4" /></li>
                     </ol>
-                    <ol>
+                    <ol role="group" aria-label="projects">
                         <li>Projects</li>
-                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project" label="See All" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/travel" label="Travel" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/photos" label="Photos" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/focus" label="Focus" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/lyrics" label="Lyrics" className="type4" /></li>
-                        <li><Button shape="box" color="nofill" href="https://byjackli.com/project/playlist" label="Playlist" className="type4" /></li>
-                    </ol>
-                    <ol>
-                        <li>Account</li>
-                        <li><Button shape="box" color="nofill" label="Profile" className="type4 invalid" /></li>
-                        <li><Button shape="box" color="nofill" label="Language" className="type4 invalid" /></li>
-                        <li><Button shape="box" color="nofill" label="Country" className="type4 invalid" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="/projects" label="See All" type="nofill" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="/project/lyrics" label="Lyrics" type="nofill" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="/project/pages" label="Pages" type="nofill" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="/project/topix" label="Topix" type="nofill" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="/project/travel" label="Travel" type="nofill" className="type4" /></li>
+                        <li><Button role="menuitem" shape="box" color="nofill" href="/project/playlist" label="Playlist" type="nofill" className="type4" /></li>
                     </ol>
                 </div>
             </div>
@@ -130,8 +129,8 @@ export function Footer(props) {
     return (
         <footer className="hrzTL">
             <div className="left">
-                <Link className="style3" to="/">byjackli</Link>
-                <p>if you can't make sacrifices, then you need a new goal</p>
+                <a className="style3" href="https://byjackli.com">byjackli</a>
+                <p>DARE TO IMAGINE.</p>
             </div>
             <div className="hrzTL">
 
@@ -150,11 +149,11 @@ export function Footer(props) {
                 </ol>
                 <ol>
                     <li className="style5">Other projects</li>
-                    <li><Intext flat={true} href="/project/travel" label="Travel - help travelers make decisions" /></li>
-                    <li><Intext flat={true} href="/project/photos" label="Photos - immersive instagram experience" /></li>
-                    <li><Intext flat={true} href="/project/focus" label="Focus - chrome extensions to improve focus" /></li>
-                    <li><Intext flat={true} href="/project/lyrics" label="Lyrics - music and lyrics side-by-side" /></li>
-                    <li><Intext flat={true} href="/project/playlists" label="Playlists - share your spotify playlists" /></li>
+                    <li><a href="https://byjackli.com/project/lyrics">Lyrics - music and lyrics side-by-side</a></li>
+                    <li><a href="https://byjackli.com/project/pages">Pages - simple website builder</a></li>
+                    <li><a href="https://byjackli.com/project/focus">Topix - academic sharing platform</a></li>
+                    <li><a href="https://byjackli.com/project/travel">Travel - help travelers make decisions</a></li>
+                    <li><a href="https://byjackli.com/project/playlists">Playlists - share your spotify playlists</a></li>
                 </ol>
             </div>
         </footer>

@@ -11,6 +11,7 @@ import Styleguide from './pages/styleguide';
 import Gate from './pages/gate';
 import Next from './pages/next';
 import Lyrics from './pages/lyrics';
+import Error from './pages/error';
 import { CompactNavbar, Footer } from './components/Navigation';
 
 class App extends React.Component {
@@ -19,32 +20,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: null,
-      pages: <>
-      </>
-    }
-  }
-
-  confirm() {
-    console.info("confirming");
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-      let email = window.localStorage.getItem("emailForSignIn");
-      if (!email) {
-        email = window.prompt("Confirm by re-entering your email.")
-      }
-      firebase.auth().signInWithEmailLink(email, window.location.href)
-        .then(result => {
-          localStorage.removeItem("emailForSignIn");
-          localStorage.setItem("user", JSON.stringify(result.user));
-
-          console.info(result.user);
-          console.info(result);
-          window.location.replace("/");
-        })
+      pages: <><Route path="/" component={() => { return (<main><section></section></main>) }} /></>
     }
   }
 
   componentDidMount() {
-    console.info("didMount", this.state.user);
+    window.addEventListener("offline", this.renderOffline.bind(this));
 
     // application authentication (protected pages & page re-direction)
     const db = firebase.firestore();
@@ -146,6 +127,34 @@ class App extends React.Component {
   componentWillUnmount() {
     clearInterval(this.spotifyTokenInterval);
     // clearInterval(this.geniusTokenInterval);
+    window.removeEventListener("offline", this.renderOffline());
+  }
+
+  confirm() {
+    console.info("confirming");
+    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+      let email = window.localStorage.getItem("emailForSignIn");
+      if (!email) {
+        email = window.prompt("Confirm by re-entering your email.")
+      }
+      firebase.auth().signInWithEmailLink(email, window.location.href)
+        .then(result => {
+          localStorage.removeItem("emailForSignIn");
+          localStorage.setItem("user", JSON.stringify(result.user));
+
+          console.info(result.user);
+          console.info(result);
+          window.location.replace("/");
+        })
+    }
+  }
+
+  renderOffline() {
+    this.setState({
+      pages: <>
+        <Route path="/" component={Error} />
+      </>
+    })
   }
 
 
@@ -161,7 +170,6 @@ class App extends React.Component {
     })
       .then(res => res.json())
       .then(result => {
-        console.info(`${app} access token result`, result);
         result.access_token ? localStorage.setItem(`${app}Token`, result.access_token) : console.info("access token did not update");
         result.refresh_token ? localStorage.setItem(`${app}Refresh`, result.refresh_token) : console.info("refresh token did not update");
 
@@ -189,7 +197,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.info("didRender", this.state.pages);
     return (
       <Router>
         <div className="App">

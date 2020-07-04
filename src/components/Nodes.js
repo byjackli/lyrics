@@ -8,7 +8,8 @@ export class Queue extends Component {
         super(props);
         this.state = {
             songWidth: 0,
-            artistWidth: 0
+            artistWidth: 0,
+            cardWidth: 198,
         }
     }
 
@@ -17,6 +18,7 @@ export class Queue extends Component {
             this.setState({
                 songWidth: document.getElementById(`song${this.props.id}`).clientWidth,
                 artistWidth: document.getElementById(`artist${this.props.id}`).clientWidth,
+                cardWidth: document.getElementById(`card${this.props.id}`).clientWidth,
             })
         }
     }
@@ -105,8 +107,8 @@ export class Queue extends Component {
                     <div>
                         <img src={this.props.image} alt={this.props.alt} />
                     </div>
-                    <div className="vrtCL">
-                        {198 < this.state.songWidth ?
+                    <div className="vrtCL" id={`card${this.props.id}`}>
+                        {this.state.cardWidth < this.state.songWidth ?
                             <div className="scroller an-scroll">
                                 <div className="scroller-fg"></div>
                                 <p className="style4">{this.props.song} {this.props.song}</p>
@@ -116,7 +118,7 @@ export class Queue extends Component {
                             </div>
                         }
                         {console.log()}
-                        {198 < this.state.artistWidth ?
+                        {this.state.cardWidth < this.state.artistWidth ?
                             <div className="scroller an-scroll">
                                 <div className="scroller-fg"></div>
                                 <p>{this.props.artist} {this.props.artist}</p>
