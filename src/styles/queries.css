@@ -25,7 +25,7 @@
 
   section.front { padding-top: calc(20px + var(--navheight)); }
 
-  .front .search-large {
+  input.search-large {
     font-size: 2.5em;
     padding: 8px 10px;
     padding-left: 20px;
@@ -66,7 +66,7 @@
   * { font-size: 15px; }
   input[type='text'], input[type='email'], input[type='password'], input[type='search'] { padding: 8px 10px; }
   main.next section { padding: 25px 15px; }
-  .front .search-large {
+  input.search-large {
     font-size: 1.5em;
     padding-left: 20px;
   }

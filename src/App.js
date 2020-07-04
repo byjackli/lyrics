@@ -43,6 +43,7 @@ class App extends React.Component {
                   <Route path="/" exact component={Next} />
                   <Route path="/spotifyAuth" exact component={Next} />
                   <Route path="/geniusAuth" exact component={Next} />
+                  <Route path="/styleguide" exact component={Styleguide} />
                 </>,
                 user: user
               })
@@ -63,6 +64,7 @@ class App extends React.Component {
           pages: <>
             <Route path="/" exact component={Gate} />
             <Route path={["/login", "/signup"]} component={Gate} />
+            <Route path="/styleguide" exact component={Styleguide} />
           </>,
           user: user
         })
