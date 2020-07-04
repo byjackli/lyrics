@@ -996,9 +996,17 @@ main.styleguide .back-button {
   width: 3em;
   height: 5em;
   position: fixed; 
-  bottom: 30px;
-  right: 45px;
+  top: 45px;
+  right: 25px;
+
+  opacity: 1;
+  background-color: var(--LightM);
+  box-shadow: 0px 3px 7px var(--DarkS);
+
   z-index: 97;
+}
+main.styleguide .back-button:hover { 
+  opacity: 1;
 }
 main.styleguide .back-button>img { width: 100%; } 
 
